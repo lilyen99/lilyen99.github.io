@@ -8,21 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Tomcat和Servlet入门小结 | </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tomcat入门 启动：  进入bin目录，双击startup.bat，运行该文件  访问浏览器，输入：http:&#x2F;&#x2F;localhost:8080 访问自己； 输入：http:&#x2F;&#x2F;别人的ip:8080 访问别人（8080为Tomcat的端口号)     启动时可能遇到的问题：  黑窗口一闪而过：  *原因：没有正确配置JAVA_HOME变量；  启动报错：  *暴力解决：在cmd中输入netsta">
+  <meta name="description" content="Tomcat入门1. 启动： 进入bin目录，双击startup.bat，运行该文件  访问浏览器，输入：http:&#x2F;&#x2F;localhost:8080 访问自己；   ​        输入：http:&#x2F;&#x2F;别人的ip:8080 访问别人（8080为Tomcat的端口号)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat和Servlet入门小结">
 <meta property="og:url" content="http://yoursite.com/2020/04/11/Tomcat%E5%92%8CServlet%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Tomcat入门 启动：  进入bin目录，双击startup.bat，运行该文件  访问浏览器，输入：http:&#x2F;&#x2F;localhost:8080 访问自己； 输入：http:&#x2F;&#x2F;别人的ip:8080 访问别人（8080为Tomcat的端口号)     启动时可能遇到的问题：  黑窗口一闪而过：  *原因：没有正确配置JAVA_HOME变量；  启动报错：  *暴力解决：在cmd中输入netsta">
+<meta property="og:description" content="Tomcat入门1. 启动： 进入bin目录，双击startup.bat，运行该文件  访问浏览器，输入：http:&#x2F;&#x2F;localhost:8080 访问自己；   ​        输入：http:&#x2F;&#x2F;别人的ip:8080 访问别人（8080为Tomcat的端口号)">
 <meta property="article:published_time" content="2020-04-11T14:41:19.000Z">
-<meta property="article:modified_time" content="2020-04-11T14:48:15.913Z">
+<meta property="article:modified_time" content="2020-04-12T09:24:54.792Z">
 <meta property="article:author" content="Yen">
+<meta property="article:tag" content="Tomcat">
+<meta property="article:tag" content="Servlet">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/img/bitbug_favicon.ico">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
   <style type="text/css">
@@ -36,7 +38,6 @@
   
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -46,7 +47,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/head.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Yen</a></h1>
@@ -58,18 +59,21 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/archives/index.html">归档</a></li>
+	        
+				<li><a href="/categories">分类</a></li>
 	        
 			</ul>
 		</nav>
+<nav>
+    总文章数 1
+</nav>
 		<nav class="header-smart-menu">
     		
     			
     			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
     			
             
-    			
-    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
     			
             
     			
@@ -80,13 +84,9 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/lilyen99" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+					<a class="mail" target="_blank" href="mailto:chenjunyanchn@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -104,7 +104,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/head.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Yen</h1>
@@ -116,29 +116,29 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/lilyen99" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+						<a class="mail" target="_blank" href="mailto:chenjunyanchn@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
 		        
 				</ul>
 			</nav>
@@ -172,40 +172,34 @@
       </header>
     
     <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Tomcat入门"><a href="#Tomcat入门" class="headerlink" title="Tomcat入门"></a>Tomcat入门</h2><ul>
-<li><h4 id="启动："><a href="#启动：" class="headerlink" title="启动："></a>启动：</h4><ul>
-<li><ol>
+
+
+	
+		<h2 id="Tomcat入门"><a href="#Tomcat入门" class="headerlink" title="Tomcat入门"></a>Tomcat入门</h2><h4 id="1-启动："><a href="#1-启动：" class="headerlink" title="1. 启动："></a>1. 启动：</h4><ol>
 <li><p>进入bin目录，双击startup.bat，运行该文件</p>
 </li>
 <li><p>访问浏览器，输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 访问自己；</p>
-<pre><code>输入：http://别人的ip:8080 访问别人（8080为Tomcat的端口号)</code></pre></li>
+</li>
+</ol>
+<p>​        输入：http://别人的ip:8080 访问别人（8080为Tomcat的端口号)</p>
+<a id="more"></a>
+
+<h4 id="2-启动时可能遇到的问题："><a href="#2-启动时可能遇到的问题：" class="headerlink" title="2. 启动时可能遇到的问题："></a>2. 启动时可能遇到的问题：</h4><ol>
+<li><p>黑窗口一闪而过：</p>
+<p>​    原因：没有正确配置JAVA_HOME变量；</p>
+</li>
+<li><p>启动报错：</p>
+<ol>
+<li>暴力解决：在cmd中输入netstat -ano找到占用端口号的对应进程并杀死</li>
+<li>温柔解决：在Tomcat的config\server.xml下找到</li>
 </ol>
 </li>
-</ul>
-</li>
-<li><h4 id="启动时可能遇到的问题："><a href="#启动时可能遇到的问题：" class="headerlink" title="启动时可能遇到的问题："></a>启动时可能遇到的问题：</h4><ul>
-<li><ol>
-<li>黑窗口一闪而过：</li>
 </ol>
-<p>*原因：没有正确配置JAVA_HOME变量；</p>
-<ol start="2">
-<li>启动报错：</li>
-</ol>
-<p>*暴力解决：在cmd中输入netstat -ano找到占用端口号的对应进程并杀死</p>
-<p>*在Tomcat的config\server.xml下找到</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag"> <span class="attr">redirectPort</span>=<span class="string">"8445"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span><span class="attr">redirectPort</span>=<span class="string">"8445"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-
-
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>*一般将端口号修改为80（浏览器默认端口号）
-
-            *好处：使用浏览器，在访问时就不用输入端口号了</code></pre><ul>
-<li><h4 id="关闭："><a href="#关闭：" class="headerlink" title="关闭："></a>关闭：</h4><ol>
+<p>​                将端口号”8080”修改为其他端口号（0~65535）</p>
+<p>​        <em>注：一般将端口号修改为80（浏览器默认端口号）。这样，在使用浏览器访问时，就不用输入端口号了。</em></p>
+<h4 id="3-关闭"><a href="#3-关闭" class="headerlink" title="3. 关闭"></a>3. 关闭</h4><ol>
 <li><p>正常关闭：</p>
 <ol>
 <li><p>bin\shutdow.bat</p>
@@ -215,62 +209,45 @@
 </ol>
 </li>
 <li><p>强制关闭：</p>
-<p>*点击启动窗口的 x </p>
+<p>   点击启动窗口的 x </p>
 </li>
 </ol>
-</li>
-<li><h4 id="配置："><a href="#配置：" class="headerlink" title="配置："></a>配置：</h4><ul>
+<h4 id="4-配置："><a href="#4-配置：" class="headerlink" title="4. 配置："></a>4. 配置：</h4><ol>
 <li><p>部署项目的方式：</p>
 <ol>
 <li><p>直接将项目放到webapps目录下即可。</p>
-<p>*项目的访问路径（即保存项目的文件名）就是浏览器访问的虚拟目录</p>
+<p><strong>*项目的访问路径（即保存项目的文件名）就是浏览器访问的虚拟目录</strong></p>
 <p>*简化部署：可以将项目打包成一个war包，再将war包放置在webapps目录下。</p>
-<pre><code>*war包会自动解压缩</code></pre></li>
+<p>*war包会自动解压缩</p>
+</li>
 <li><p>配置conf\server.xml文件：</p>
-<p>找到 <Host> 标签体，在里面配置</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">docBase</span>=<span class="string">"C:\项目存放的路径"</span> <span class="attr">path</span>=<span class="string">"/虚拟目录"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>*找到 <Host> 标签体，在里面配置 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context docBase&#x3D;&quot;C:\项目存放的路径&quot; path&#x3D;&quot;&#x2F;虚拟目录&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
 
-
-
+<p>*优点：不用将项目部署在webapps下了，可以放置在任何位置</p>
+<p>*缺点：需要修改server.xml文件，可能造成破坏</p>
+</li>
+<li><p>在config\Catalina\localhost下创建任意名称的xml文件，在文件中编写</p>
 </li>
 </ol>
 </li>
-</ul>
-</li>
-</ul>
-<pre><code>           *优点：不用将项目部署在webapps下了，可以放置在任何位置
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">docBase</span>=<span class="string">"C:\项目存放的位置"</span></span></span><br></pre></td></tr></table></figure>
 
-           *缺点：需要修改server.xml文件，可能造成破坏
-
-3. 在config\Catalina\localhost下创建任意名称的xml文件，在文件中编写
-
-   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">docBase</span>=<span class="string">"C:\项目存放的位置"</span></span></span><br></pre></td></tr></table></figure>
-
-
-
-           *虚拟路径就是此xml文件的名称
-
-           *优点：相比于第二种配置方法，可以避免破坏server.xml文件</code></pre><ul>
+<p>​                <strong>*虚拟目录就是此xml文件的名称</strong></p>
+<p>​                *相比于第二种配置方法，可以避免破坏server.xml文件</p>
+<ol start="2">
 <li><p>静态项目和动态项目：</p>
-<ul>
-<li>目录结构：<ul>
-<li>–项目的根目录（存放静态项目）<ul>
-<li>–WEB-INF目录（此目录下的项目不能被浏览器直接访问）<ul>
-<li>–web.xml: web项目的核心配置文件</li>
-<li>–classes目录：放置字节码文件的目录</li>
-<li>–lib目录： 放置依赖的jar包</li>
-</ul>
+<p>目录结构：</p>
+<p>​    –项目的根目录（存放静态项目）</p>
+<p>​            –WEB-INF目录（<strong>此目录下的项目不能被浏览器直接访问</strong>）</p>
+<p>​                    –web.xml: web项目的核心配置文件</p>
+<p>​                            –classes目录：放置字节码文件的目录</p>
+<p>​                                    –lib目录： 放置依赖的jar包</p>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Servlet入门"><a href="#Servlet入门" class="headerlink" title="Servlet入门"></a>Servlet入门</h2><ul>
-<li><h4 id="概念：运行在服务端的小程序"><a href="#概念：运行在服务端的小程序" class="headerlink" title="概念：运行在服务端的小程序"></a>概念：运行在服务端的小程序</h4><pre><code>*Servlet就是一个接口，定义了Java类被浏览器访问到（Tomcat识别）的规则。</code></pre></li>
-<li><h4 id="Java类对Servlet接口的实现："><a href="#Java类对Servlet接口的实现：" class="headerlink" title="Java类对Servlet接口的实现："></a>Java类对Servlet接口的实现：</h4><ol>
+</ol>
+<h2 id="Servlet入门"><a href="#Servlet入门" class="headerlink" title="Servlet入门"></a>Servlet入门</h2><h4 id="1-概念：运行在服务端的小程序"><a href="#1-概念：运行在服务端的小程序" class="headerlink" title="1. 概念：运行在服务端的小程序"></a>1. 概念：运行在服务端的小程序</h4><p>​        Servlet就是一个接口，定义了Java类被浏览器访问到（Tomcat识别）的规则。</p>
+<h4 id="2-Java类对Servlet接口的实现："><a href="#2-Java类对Servlet接口的实现：" class="headerlink" title="2. Java类对Servlet接口的实现："></a>2. Java类对Servlet接口的实现：</h4><ol>
 <li><p>创建一个JavaEE项目</p>
 </li>
 <li><p>定义一个Java类，实现（implement）Servlet接口</p>
@@ -278,56 +255,53 @@
 <li><p>复习Servlet接口中的抽象方法（Servlet的生命周期方法）</p>
 </li>
 <li><p>配置Servlet</p>
-<p>*在web.xml中进行配置：</p>
+<p> 在web.xml中进行配置：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>对应类的全类名<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义的名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>访问的资源路径<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
-</li>
-<li><h4 id="Servlet执行原理："><a href="#Servlet执行原理：" class="headerlink" title="Servlet执行原理："></a>Servlet执行原理：</h4><ol>
-<li><p>当服务器接收到客户端浏览器的请求后，会解析URL路径，访问获取的Servlet的资源路径</p>
-</li>
-<li><p>查找web.xml文件，是否有对应的<url-pattern> 标签体内容。</p>
-</li>
-<li><p>如果有，则找到对应的<servlet-class> 全类名</p>
-</li>
-<li><p>Tomcat会将字节码文件加载进内存，并且创建对象</p>
-</li>
-<li><p>调用其方法</p>
-</li>
+<h4 id="3-Servlet执行原理："><a href="#3-Servlet执行原理：" class="headerlink" title="3. Servlet执行原理："></a>3. Servlet执行原理：</h4><ol>
+<li>当服务器接收到客户端浏览器的请求后，会解析URL路径，访问获取的Servlet的资源路径</li>
+<li>查找web.xml文件，是否有对应的<url-pattern> 标签体内容。</li>
+<li>如果有，则找到对应的<servlet-class> 全类名</li>
+<li>Tomcat会将字节码文件加载进内存，并且创建对象</li>
+<li>调用其方法</li>
 </ol>
-</li>
-<li><h4 id="Servlet中的生命周期方法"><a href="#Servlet中的生命周期方法" class="headerlink" title="Servlet中的生命周期方法"></a>Servlet中的生命周期方法</h4><ol>
+<h4 id="4-Servlet中的生命周期方法"><a href="#4-Servlet中的生命周期方法" class="headerlink" title="4. Servlet中的生命周期方法"></a>4. Servlet中的生命周期方法</h4><ol>
 <li><p>init方法：</p>
-<p>*在Servlet被创建时执行，并只执行一次。</p>
-<pre><code>*Servlet什么时候被执行？
-
-                 *默认情况下，第一次被访问时，Servlet被创建
-
-                 *可以配置创建Sevlet的时机：
-
-                                 在web.xml的&lt;servlet&gt; 标签中配置</code></pre><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>负数或正数<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<pre><code>*如果是负数，则Servlet在被访问时创建
-
-*如果时正数，则Servlet在服务器（Tomcat）启动时创建</code></pre></li>
-</ol>
+<ol>
+<li><p>在Servlet被创建时执行，并<strong>只执行一次</strong>。</p>
 </li>
-</ul>
-<pre><code>​                                            </code></pre><ol start="2">
+<li><p>默认情况下，第一次被访问时，Servlet被创建</p>
+</li>
+<li><p>可以配置创建Sevlet的时机：</p>
+<p>在web.xml的<servlet> 标签中配置:</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>负数或正数<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​            *如果是负数，则Servlet在被访问时创建<br>​            *如果时正数，则Servlet在服务器（Tomcat）启动时创建                                    </p>
+<ol start="2">
 <li><p>service方法：</p>
-<p>*每次访问Servlet时，便会别调用一次</p>
+<p>​    每次访问Servlet时，便会被调用一次</p>
 </li>
 <li><p>destory方法：</p>
-<p>*Servlet被销毁时执行，并且只执行一次</p>
-<p>*只有当服务器正常关闭时，才会执行</p>
-<p>*destory方法在Servlet被销毁之前执行，相当于释放资源，而init相当于加载资源</p>
+<ol>
+<li><p>Servlet被销毁时执行，并且<strong>只执行一次</strong></p>
+</li>
+<li><p>只有当服务器正常关闭时，才会执行</p>
+</li>
+<li><p><strong>destory方法在Servlet被销毁之前执行，相当于释放资源，而init相当于加载资源</strong></p>
 </li>
 </ol>
-<ul>
-<li><h4 id="Servlet-3-0"><a href="#Servlet-3-0" class="headerlink" title="Servlet 3.0:"></a>Servlet 3.0:</h4><ol>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="5-Servlet-3-0"><a href="#5-Servlet-3-0" class="headerlink" title="5. Servlet 3.0:"></a>5. Servlet 3.0:</h4><ol>
 <li><p>好处：支持直接配置。可以不需要web.xml了</p>
 </li>
-<li><p>步骤：</p>
+<li><p>快速入门：</p>
 <ol>
 <li><p>创建一个JavaEE项目，选择Servlet的版本为3.0以上，可以不创建web.xml</p>
 </li>
@@ -335,44 +309,45 @@
 </li>
 <li><p>复写方法</p>
 </li>
-<li><p>在类上使用@WebServlet注解，进行配置</p>
-<p>*@WebServlet(“资源路径”)</p>
+<li><p>在类上使用@WebServlet注解，进行配置：<strong>@WebServlet(“资源路径”)</strong></p>
 </li>
 </ol>
 </li>
 </ol>
-</li>
-</ul>
 
-      
+	
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Tomcat</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Servlet</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JavaWeb学习//" class="article-tag-list-link color5">JavaWeb学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -434,16 +409,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-  
-    <a href="/2020/04/11/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -457,6 +422,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat入门"><span class="toc-number">1.</span> <span class="toc-text">Tomcat入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-启动："><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 启动：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-启动时可能遇到的问题："><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 启动时可能遇到的问题：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-关闭"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-配置："><span class="toc-number">1.0.4.</span> <span class="toc-text">4. 配置：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet入门"><span class="toc-number">2.</span> <span class="toc-text">Servlet入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-概念：运行在服务端的小程序"><span class="toc-number">2.0.1.</span> <span class="toc-text">1. 概念：运行在服务端的小程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Java类对Servlet接口的实现："><span class="toc-number">2.0.2.</span> <span class="toc-text">2. Java类对Servlet接口的实现：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Servlet执行原理："><span class="toc-number">2.0.3.</span> <span class="toc-text">3. Servlet执行原理：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Servlet中的生命周期方法"><span class="toc-number">2.0.4.</span> <span class="toc-text">4. Servlet中的生命周期方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Servlet-3-0"><span class="toc-number">2.0.5.</span> <span class="toc-text">5. Servlet 3.0:</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -498,7 +476,7 @@
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: false,
+		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
@@ -522,8 +500,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
       
     
       
-      
-      
     
       
       
@@ -535,15 +511,13 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     
       
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
-      
         
       
-      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
       
         
     </ul>
@@ -562,6 +536,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Servlet</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -607,43 +589,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
 
     
-    	<section class="tools-section tools-section-friends" q-show="friends">
-  		
-        <ul class="search-ul">
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
-            </li>
-          
-        </ul>
-  		
-    	</section>
-    
 
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">普通大学生</div>
   	  	
     	</section>
     
