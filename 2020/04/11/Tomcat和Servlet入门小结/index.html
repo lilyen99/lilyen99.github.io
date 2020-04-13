@@ -15,10 +15,10 @@
 <meta property="og:site_name">
 <meta property="og:description" content="Tomcat入门1. 启动： 进入bin目录，双击startup.bat，运行该文件  访问浏览器，输入：http:&#x2F;&#x2F;localhost:8080 访问自己；   ​        输入：http:&#x2F;&#x2F;别人的ip:8080 访问别人（8080为Tomcat的端口号)">
 <meta property="article:published_time" content="2020-04-11T14:41:19.000Z">
-<meta property="article:modified_time" content="2020-04-12T09:24:54.792Z">
+<meta property="article:modified_time" content="2020-04-13T03:25:06.735Z">
 <meta property="article:author" content="Yen">
-<meta property="article:tag" content="Tomcat">
 <meta property="article:tag" content="Servlet">
+<meta property="article:tag" content="Tomcat">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="" type="application/atom+xml">
@@ -66,7 +66,7 @@
 			</ul>
 		</nav>
 <nav>
-    总文章数 1
+    总文章数 2
 </nav>
 		<nav class="header-smart-menu">
     		
@@ -314,7 +314,16 @@
 </ol>
 </li>
 </ol>
-
+<h4 id="6-Servlet体系结构"><a href="#6-Servlet体系结构" class="headerlink" title="6. Servlet体系结构"></a>6. Servlet体系结构</h4><p>​    Servlet (接口)—–&gt;GenericServlet(抽象类)——&gt;HttpServlet(抽象类)</p>
+<p>​    *GenericServlet:将Servlet接口中其他的方法都做了默认空实现，只将service()方法作为抽象</p>
+<p>​       所以，将来定义Servlet类时，可以继承GenericServlet，只实现service()方法即可</p>
+<p>​    *HttpServlet:对Http协议的封装，简化操作</p>
+<pre><code>1. 定义类继承HttpServle
+  2. 复写doGet/doPost方法（Servlet的请求方式）</code></pre><h4 id="7-Servlet相关配置"><a href="#7-Servlet相关配置" class="headerlink" title="7.Servlet相关配置"></a>7.Servlet相关配置</h4><pre><code>1. Servlet访问路径：一个Sevlet可以配置多个访问路径   **@WebSevlet({&quot;/xx&quot;,&quot;/xx&quot;,&quot;/xx&quot;})**
+ 2. 路径定义规则:
+      1. /xx
+      2. /xx/xx（多层路径
+      3. *.do</code></pre>
 	
 
     </div>
@@ -326,11 +335,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Tomcat</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Servlet</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Servlet</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Tomcat</a>
         		</li>
       		
 		</ul>
@@ -409,6 +418,20 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2020/04/13/Request%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Request入门学习小结
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -430,7 +453,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat入门"><span class="toc-number">1.</span> <span class="toc-text">Tomcat入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-启动："><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 启动：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-启动时可能遇到的问题："><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 启动时可能遇到的问题：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-关闭"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-配置："><span class="toc-number">1.0.4.</span> <span class="toc-text">4. 配置：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet入门"><span class="toc-number">2.</span> <span class="toc-text">Servlet入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-概念：运行在服务端的小程序"><span class="toc-number">2.0.1.</span> <span class="toc-text">1. 概念：运行在服务端的小程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Java类对Servlet接口的实现："><span class="toc-number">2.0.2.</span> <span class="toc-text">2. Java类对Servlet接口的实现：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Servlet执行原理："><span class="toc-number">2.0.3.</span> <span class="toc-text">3. Servlet执行原理：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Servlet中的生命周期方法"><span class="toc-number">2.0.4.</span> <span class="toc-text">4. Servlet中的生命周期方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Servlet-3-0"><span class="toc-number">2.0.5.</span> <span class="toc-text">5. Servlet 3.0:</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat入门"><span class="toc-number">1.</span> <span class="toc-text">Tomcat入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-启动："><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 启动：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-启动时可能遇到的问题："><span class="toc-number">1.0.2.</span> <span class="toc-text">2. 启动时可能遇到的问题：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-关闭"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-配置："><span class="toc-number">1.0.4.</span> <span class="toc-text">4. 配置：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet入门"><span class="toc-number">2.</span> <span class="toc-text">Servlet入门</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-概念：运行在服务端的小程序"><span class="toc-number">2.0.1.</span> <span class="toc-text">1. 概念：运行在服务端的小程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Java类对Servlet接口的实现："><span class="toc-number">2.0.2.</span> <span class="toc-text">2. Java类对Servlet接口的实现：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Servlet执行原理："><span class="toc-number">2.0.3.</span> <span class="toc-text">3. Servlet执行原理：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Servlet中的生命周期方法"><span class="toc-number">2.0.4.</span> <span class="toc-text">4. Servlet中的生命周期方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Servlet-3-0"><span class="toc-number">2.0.5.</span> <span class="toc-text">5. Servlet 3.0:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Servlet体系结构"><span class="toc-number">2.0.6.</span> <span class="toc-text">6. Servlet体系结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-Servlet相关配置"><span class="toc-number">2.0.7.</span> <span class="toc-text">7.Servlet相关配置</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -538,11 +561,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
+                <a href="javascript:void(0)" class="js-tag color3">Servlet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Servlet</a>
+                <a href="javascript:void(0)" class="js-tag color5">Http</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Request</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Tomcat</a>
               </li>
             
             <div class="clearfix"></div>
