@@ -5,14 +5,13 @@
     <url>/2020/04/13/Request%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><h4 id="1-特点"><a href="#1-特点" class="headerlink" title="1. 特点"></a>1. 特点</h4><ol>
 <li><p>基于TCP/IP的高级协议</p>
+<a id="more"></a>
 </li>
 <li><p>默认端口号为 80 </p>
 </li>
 <li><p>基于请求/响应模型：一次请求对应一次响应</p>
 </li>
-<li><p>无状态的：每次请求之间相互独立，不能交互数据</p>
-<a id="more"></a>
-
+<li><p>无状态的：每次请求之间相互独立，不能交互数</p>
 <p>*历史版本</p>
 <p>1.0：每一次请求响应都会建立新的连接</p>
 <p>1.1：可以复用链接，是对1.0版本的升级</p>
@@ -174,13 +173,12 @@
     <url>/2020/04/11/Tomcat%E5%92%8CServlet%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<h2 id="Tomcat入门"><a href="#Tomcat入门" class="headerlink" title="Tomcat入门"></a>Tomcat入门</h2><h4 id="1-启动："><a href="#1-启动：" class="headerlink" title="1. 启动："></a>1. 启动：</h4><ol>
 <li><p>进入bin目录，双击startup.bat，运行该文件</p>
+<a id="more"></a>
 </li>
 <li><p>访问浏览器，输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 访问自己；</p>
 </li>
 </ol>
 <p>​        输入：http://别人的ip:8080 访问别人（8080为Tomcat的端口号)</p>
-<a id="more"></a>
-
 <h4 id="2-启动时可能遇到的问题："><a href="#2-启动时可能遇到的问题：" class="headerlink" title="2. 启动时可能遇到的问题："></a>2. 启动时可能遇到的问题：</h4><ol>
 <li><p>黑窗口一闪而过：</p>
 <p>​    原因：没有正确配置JAVA_HOME变量；</p>
@@ -327,6 +325,219 @@
       <tags>
         <tag>Servlet</tag>
         <tag>Tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Response入门学习小结</title>
+    <url>/2020/04/14/Response%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><h4 id="1-请求消息：客户端发给服务器端的数据"><a href="#1-请求消息：客户端发给服务器端的数据" class="headerlink" title="1.请求消息：客户端发给服务器端的数据"></a>1.请求消息：客户端发给服务器端的数据</h4><p>数据格式：</p>
+<ol>
+<li><p>请求头</p>
+<a id="more"></a>
+</li>
+<li><p>请求行</p>
+</li>
+<li><p>请求空行</p>
+</li>
+<li><p>请求体</p>
+</li>
+</ol>
+<h4 id="2-响应消息"><a href="#2-响应消息" class="headerlink" title="2. 响应消息"></a>2. 响应消息</h4><p>数据格式：</p>
+<ol>
+<li><p>响应行：</p>
+<p>数据格式：</p>
+<ol>
+<li>版本/协议</li>
+<li>响应状态码：<ol>
+<li>状态码都是三位数的</li>
+<li>分类：<ol>
+<li>1xx：服务器接收客户端消息，但是没有接受完成，等待一段时间后，发送此状态码</li>
+<li>2xx：成功。例：200</li>
+<li>3xx：重定向。例：302</li>
+<li>4xx：客户端错误。例：404（请求路径没有对应资源）、405（请求方式没有对应的doXxx方法</li>
+<li>5xx：服务器端错误。例：500（服务器内部出现问题）</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>响应头：</p>
+<ol>
+<li><p>格式：  头名称：值</p>
+</li>
+<li><p>常见的响应头：</p>
+<ol>
+<li><p>Content-Type：服务器端告诉客户端本次响应体数据格式以及编码方式</p>
+</li>
+<li><p>Content-disposition：服务端告诉客户端以什么格式打开响应体数据</p>
+<p>取值：</p>
+<ol>
+<li>in-line：默认值，在当前页面打开</li>
+<li>attachment;filename=xxx ：以附件形式打开响应体（一般用于文件下载）</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>响应空行</p>
+</li>
+<li><p>响应体：传输的数据</p>
+</li>
+</ol>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><ol>
+<li><p>设置响应行</p>
+<p>重定向：</p>
+<ol>
+<li>代码实现</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//设置状态码为302</span></span><br><span class="line">response.setStatus(<span class="number">302</span>);</span><br><span class="line"><span class="comment">//设置响应头location（即设置跳转的资源方向）</span></span><br><span class="line">response.setHeader(<span class="string">"location"</span>,<span class="string">"/虚拟目录/资源路径"</span>);</span><br><span class="line"><span class="comment">//还有一种简单的重定向方式</span></span><br><span class="line">response.sendRedirect(<span class="string">"/虚拟目录/资源路径"</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>重定向的特点：redirect</p>
+<ol>
+<li>地址栏发生变化</li>
+<li>重定向可以访问其他站点（服务器）的资源</li>
+<li>重定向是两次请求，不能使用Request对象来共享数据</li>
+</ol>
+</li>
+<li><p>转发的特点：forwar</p>
+<ol>
+<li>地址栏不发生变化</li>
+<li>转发只能访问当前服务器下的资源</li>
+<li>转发是一次请求，所有可以使用Request对象来共享数据</li>
+</ol>
+</li>
+<li><p>路径的写法</p>
+<ol>
+<li><p>路径分类</p>
+<ol>
+<li><p>相对路径：通过相对路径不可以确定唯一资源</p>
+<ol>
+<li>例：./index.html</li>
+<li>不能以 / 开头，以 . 开头（一个 . 代表当前目录下，两个 . 代表上一级目录下）</li>
+</ol>
+</li>
+<li><p>绝对路径：通过绝对路径可以确定唯一资源</p>
+<ol>
+<li><p>以 / 开头</p>
+</li>
+<li><p>规则：要判断定义的路径是给谁使用的</p>
+<ol>
+<li><p>给客户端使用：需要加虚拟目录</p>
+<p>*建议虚拟目录动态获取：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">request.getContext();</span><br></pre></td></tr></table></figure>
+
+<p>*例：<a> <form> 标签的重定向</p>
+</li>
+<li><p>给服务器端使用：不需要加虚拟目录</p>
+<p>*例：转发路径</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>设置响应头：setHeader(String name , String value);</p>
+</li>
+<li><p>设置响应体：</p>
+<ol>
+<li><p>服务器端输出字符数据到客户端</p>
+<ol>
+<li><p>步骤：</p>
+<ol>
+<li>获取字符输出流</li>
+<li>输出数据</li>
+</ol>
+</li>
+<li><p>注意：</p>
+<p>乱码问题：</p>
+<ol>
+<li><p>在Tomcat中，获取的字符输出流默认编码是ISO-8859-1</p>
+</li>
+<li><p>设置该流的默认编码</p>
+</li>
+<li><p>告诉浏览器响应体使用的编码</p>
+<p>*简单形式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>服务器端输出字节数据到浏览器（一般用于图片传输）</p>
+<p>步骤：</p>
+<ol>
+<li>获取字节输出流</li>
+<li>输出数据</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a>ServletContext对象</h2><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>代表整个web应用，可以和程序的容器（服务器）通信</p>
+<h4 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h4><ol>
+<li><p>通过Request对象获取</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">request.getServletContext();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过HttpServlet获取</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.getServletContext();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><ol>
+<li><p>获取MIME类型：</p>
+<ol>
+<li><p>MIME类型：在互联网通信过程中定义的一种文件数据类型</p>
+</li>
+<li><p>格式： 大类型/小类型</p>
+<p>*例：text/html、image/jpeg</p>
+</li>
+<li><p>获取：String   getMimeType(String file);</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String type = ServletContext.getMimeType(<span class="string">"filename"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>域对象：共享数据</p>
+<ol>
+<li><p>setAttribute(String name , Object value);</p>
+</li>
+<li><p>getAttribute(String name);</p>
+</li>
+<li><p>removeAttribut(String name);</p>
+<p>*ServletContext对象范围：所有用户所有请求的数据，可以不用转发（forward）就能在不同的Servlet资源中共享数据</p>
+</li>
+</ol>
+</li>
+<li><p>获取文件的真实（服务器）路径：String   getRealPath(String path)</p>
+<ol>
+<li><p>web目录下的资源的真实路径</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String path = ServletContext.getRealPath(<span class="string">"/资源路径"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>WEB-INF目录下的资源的真实路径</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String path = ServletContext.getRealPath(<span class="string">"/WEB-INF/资源路径"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>src目录下的资源的真实路径</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String path = ServletContext.getRealPath(<span class="string">"/WEB-INF/classes/资源路径"</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaWeb学习</category>
+      </categories>
+      <tags>
+        <tag>Http</tag>
+        <tag>Response</tag>
+        <tag>ServletContext</tag>
       </tags>
   </entry>
 </search>
