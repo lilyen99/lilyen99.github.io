@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Cookie和Session入门学习小结</title>
+    <url>/2020/04/15/Cookie%E5%92%8CSession%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="会话技术"><a href="#会话技术" class="headerlink" title="会话技术"></a>会话技术</h2><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h4><p>一次会话中包含多次请求和响应，当浏览器第一次给服务器发送请求时，会话建议，直到有一方断开</p>
+<a id="more"></a>
+
+<h4 id="2-功能"><a href="#2-功能" class="headerlink" title="2. 功能"></a>2. 功能</h4><p>在一次会话范围内的多次请求间，共享数据</p>
+<h4 id="3-方式"><a href="#3-方式" class="headerlink" title="3. 方式"></a>3. 方式</h4><ol>
+<li>客户端会话技术：<strong>Cookie</strong></li>
+<li>服务器端会话技术：<strong>Session</strong></li>
+</ol>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><h4 id="1-概念-1"><a href="#1-概念-1" class="headerlink" title="1. 概念"></a>1. 概念</h4><p>客户端会话技术，将数据保存到客户端中</p>
+<h4 id="2-入门"><a href="#2-入门" class="headerlink" title="2. 入门"></a>2. 入门</h4><p>步骤：</p>
+<ol>
+<li><p>创建Cookie对象，绑定数据</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">"name"</span>,<span class="string">"value"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送Cookie对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">response.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取Cookie对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie[] cookies = request.getCookies();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3. 实现原理"></a>3. 实现原理</h4><p>基于响应头<strong>set-cookie</strong>和请求头<strong>cookie</strong>实现</p>
+<h4 id="4-细节"><a href="#4-细节" class="headerlink" title="4.细节"></a>4.细节</h4><ol>
+<li><p>可以一次发送多个Cookie对象（可以创建多个Cookie对象，使用response调用多次<strong>addCookie</strong>方法即可）</p>
+</li>
+<li><p>在浏览器中的保存：</p>
+<ol>
+<li><p>在默认情况下，当浏览器关闭后，Cookie数据被销毁</p>
+</li>
+<li><p>可以持久化保存：</p>
+<ol>
+<li>使用 <strong>setMaxAge(int  seconds);</strong></li>
+<li>当参数为正数时：将Cookie数据写到硬盘的文件中，并指定Cookie存活时间（单位为秒），时间到后，Cookie文件自动失效</li>
+<li>当参数为负数时：即为默认情况</li>
+<li>当参数为零时：删除Cookie消息</li>
+</ol>
+</li>
+<li><p>在tomcat 8之后支持中文数据，但是仍然不支持一些特殊字符，建议使用URL编码存储，使用URL编码解析：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String value = URLEncoder.encode(String value,<span class="string">"utf-8"</span>);</span><br><span class="line">String value = URLDecoder.decode(String value,<span class="string">"utf-8"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Cookie共享问题：</p>
+<ol>
+<li><p>在一个tomcat服务器中，部署了多个web项目，那么在默认情况下，Cookie数据不能在这些web项目中共享</p>
+<p><em>可以通过 *</em>setPath(String path)<strong>：设置Cookie数据的获取范围。默认情况下，设置为当前的虚拟目录，若要在一个tomcat服务器中共享，可以将path设置为</strong>“/“**</p>
+</li>
+<li><p>在不同的tomcat服务器间，默认情况下Cookie无法共享</p>
+</li>
+</ol>
+</li>
+<li><p>Cookie的特点和作用</p>
+<ol>
+<li>特点<ol>
+<li>Cookie存储数据在客户端浏览器</li>
+<li>浏览器对单个Cookie数据的大小有限制（4kb）以及对同一个域名下的Cookie总数量也有限制（20个）</li>
+</ol>
+</li>
+<li>作用<ol>
+<li>Cookie一般用于存储少量的不太敏感的数据</li>
+<li>在不登录的情况下，完成服务器对客户端的身份识别</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><h4 id="1-概念-2"><a href="#1-概念-2" class="headerlink" title="1. 概念"></a>1. 概念</h4><p>服务器端会话技术，在一次会话的多次请求期间共享数据，将数据保存在服务器端的对象中</p>
+<h4 id="2-入门-1"><a href="#2-入门-1" class="headerlink" title="2. 入门"></a>2. 入门</h4><p>步骤</p>
+<ol>
+<li><p>获取HttpSession对象：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HttpSession session = request.getSession();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用HttpSession对象：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">session.setAttribute(<span class="string">"name"</span>,<span class="string">"value"</span>);</span><br><span class="line">session.getAttribut(<span class="string">"name"</span>);</span><br><span class="line">session.removeAttribute(<span class="string">"name"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="3-原理"><a href="#3-原理" class="headerlink" title="3. 原理"></a>3. 原理</h4><p>Session的实现是依赖于Cookie的</p>
+<h4 id="4-细节-1"><a href="#4-细节-1" class="headerlink" title="4.细节"></a>4.细节</h4><ol>
+<li><p>当客户端关闭后（浏览器关闭），服务器不关闭，再次获取的Session对象不是同一个</p>
+<p><em>可以通过创建Cookie（Session是依赖于Cookie而实现的），键为*</em>JSESSIONID<strong>，值为</strong>session.getId()**设置最大存活时间，让Cookie持久化保存</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie c = <span class="keyword">new</span> Cookie(<span class="string">"JSESSIONID"</span>,session.getId());</span><br><span class="line">c.setMaxAge(<span class="number">60</span> * <span class="number">60</span>);</span><br><span class="line">response.addCookie(c);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端不关闭，服务器关闭后，再次获取的Session对象不是同一个</p>
+<p>*但是为了确保数据不丢失，Tomcat将会自动完成以下工作（idea不行）</p>
+<ol>
+<li>Session的钝化：在服务器正常关闭之前，将session对象系列化到硬盘上</li>
+<li>Session的活化：在服务器启动后，将session文件转化为内存中的session对象即可。</li>
+</ol>
+</li>
+<li><p>Session什么时候被销毁？</p>
+<ol>
+<li><p>服务器关闭</p>
+</li>
+<li><p>Session对象调用invalidate()</p>
+</li>
+<li><p>Session默认失效时间为30分钟，可以进入Tomcat的web.xml文件进行配置</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">session-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">session-timeout</span>&gt;</span>30<span class="tag">&lt;/<span class="name">session-timeout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Session的特点</p>
+<ol>
+<li>Session用于存储一次会话的多次请求的数据在服务器端</li>
+<li>Session可以存储任意类型，任意大小的数据</li>
+</ol>
+</li>
+<li><p>Session和Cookie的区别</p>
+<ol>
+<li>Session存储在服务器端，Cookie存储在客户端</li>
+<li>Session没有存储数据的大小限制，Cookie有</li>
+<li>Session数据安全，Cookie相对不安全</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaWeb学习</category>
+      </categories>
+      <tags>
+        <tag>Cookie</tag>
+        <tag>Session</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Request入门学习小结</title>
     <url>/2020/04/13/Request%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
     <content><![CDATA[<h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><h4 id="1-特点"><a href="#1-特点" class="headerlink" title="1. 特点"></a>1. 特点</h4><ol>
@@ -169,163 +297,28 @@
       </tags>
   </entry>
   <entry>
-    <title>Tomcat和Servlet入门小结</title>
-    <url>/2020/04/11/Tomcat%E5%92%8CServlet%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<h2 id="Tomcat入门"><a href="#Tomcat入门" class="headerlink" title="Tomcat入门"></a>Tomcat入门</h2><h4 id="1-启动："><a href="#1-启动：" class="headerlink" title="1. 启动："></a>1. 启动：</h4><ol>
-<li><p>进入bin目录，双击startup.bat，运行该文件</p>
+    <title>if...if和if...else if的区别</title>
+    <url>/2020/04/15/if-if%E5%92%8Cif-else-if%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h4 id="案例展示"><a href="#案例展示" class="headerlink" title="案例展示"></a>案例展示</h4><p>在学习Cookie入门时，需要做一个相关案例，需求如下：</p>
+<ol>
+<li><p>访问一个Servlet，如果是第一次访问，则提示：您好，欢迎您首次访问。</p>
 <a id="more"></a>
 </li>
-<li><p>访问浏览器，输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 访问自己；</p>
+<li><p>如果不是第一次访问，则提示：欢迎回来，您上次访问时间为:显示时间字符串</p>
 </li>
 </ol>
-<p>​        输入：http://别人的ip:8080 访问别人（8080为Tomcat的端口号)</p>
-<h4 id="2-启动时可能遇到的问题："><a href="#2-启动时可能遇到的问题：" class="headerlink" title="2. 启动时可能遇到的问题："></a>2. 启动时可能遇到的问题：</h4><ol>
-<li><p>黑窗口一闪而过：</p>
-<p>​    原因：没有正确配置JAVA_HOME变量；</p>
-</li>
-<li><p>启动报错：</p>
-<ol>
-<li>暴力解决：在cmd中输入netstat -ano找到占用端口号的对应进程并杀死</li>
-<li>温柔解决：在Tomcat的config\server.xml下找到</li>
-</ol>
-</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span><span class="attr">redirectPort</span>=<span class="string">"8445"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/CookieTest1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CookieTest1</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">//设置页面显示格式</span></span><br><span class="line">        response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">//获取浏览器的cookie数据</span></span><br><span class="line">        Cookie[] cookies = request.getCookies();</span><br><span class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">        <span class="comment">//对从浏览器获取的cookie进行判断</span></span><br><span class="line">        <span class="keyword">if</span>(cookies != <span class="keyword">null</span> &amp;&amp; cookies.length &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">//对获取的cookie数据进行遍历</span></span><br><span class="line">            <span class="keyword">for</span>(Cookie cookie : cookies)&#123;</span><br><span class="line">                String name = cookie.getName();</span><br><span class="line">                <span class="keyword">if</span>(name.equals(<span class="string">"lastTime"</span>))&#123;</span><br><span class="line">                    flag = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">//获取上次访问时间</span></span><br><span class="line">                    String value = cookie.getValue();</span><br><span class="line">                    <span class="comment">//使用url编码进行解码</span></span><br><span class="line">                    value = URLDecoder.decode(value,<span class="string">"utf-8"</span>);</span><br><span class="line">                    response.getWriter().write(<span class="string">"欢迎回来！您上次访问时间："</span>+value);</span><br><span class="line">                    <span class="comment">//重新设置此cookie数据的值，并返回给浏览器，记录本次访问时间，以便下次访问时调用</span></span><br><span class="line">                    Date date = <span class="keyword">new</span> Date();</span><br><span class="line">                    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy:MM:dd HH:mm:ss"</span>);</span><br><span class="line">                    String now = sdf.format(date);</span><br><span class="line">                    <span class="comment">//使用url编码方式</span></span><br><span class="line">                    now = URLEncoder.encode(now,<span class="string">"utf-8"</span>);</span><br><span class="line">                    cookie.setValue(now);</span><br><span class="line">                    cookie.setMaxAge(<span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span>*<span class="number">30</span>);</span><br><span class="line">                    response.addCookie(cookie);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cookies == <span class="keyword">null</span> || cookies.length == <span class="number">0</span> || flag == <span class="keyword">false</span>)&#123;</span><br><span class="line">            <span class="comment">//创建一个cookie，记录首次访问的时间，以便下次访问时调用</span></span><br><span class="line">            Date date = <span class="keyword">new</span> Date();</span><br><span class="line">            SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy:MM:dd HH:mm:ss"</span>);</span><br><span class="line">            String now = sdf.format(date);</span><br><span class="line">            now = URLEncoder.encode(now,<span class="string">"utf-8"</span>);</span><br><span class="line">            Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">"lastTime"</span>,now);</span><br><span class="line">            cookie.setMaxAge(<span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span>*<span class="number">30</span>);</span><br><span class="line">            response.addCookie(cookie);</span><br><span class="line">            response.getWriter().write(<span class="string">"欢迎您首次访问"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​                将端口号”8080”修改为其他端口号（0~65535）</p>
-<p>​        <em>注：一般将端口号修改为80（浏览器默认端口号）。这样，在使用浏览器访问时，就不用输入端口号了。</em></p>
-<h4 id="3-关闭"><a href="#3-关闭" class="headerlink" title="3. 关闭"></a>3. 关闭</h4><ol>
-<li><p>正常关闭：</p>
-<ol>
-<li><p>bin\shutdow.bat</p>
-</li>
-<li><p>ctrl+c</p>
-</li>
-</ol>
-</li>
-<li><p>强制关闭：</p>
-<p>   点击启动窗口的 x </p>
-</li>
-</ol>
-<h4 id="4-配置："><a href="#4-配置：" class="headerlink" title="4. 配置："></a>4. 配置：</h4><ol>
-<li><p>部署项目的方式：</p>
-<ol>
-<li><p>直接将项目放到webapps目录下即可。</p>
-<p><strong>*项目的访问路径（即保存项目的文件名）就是浏览器访问的虚拟目录</strong></p>
-<p>*简化部署：可以将项目打包成一个war包，再将war包放置在webapps目录下。</p>
-<p>*war包会自动解压缩</p>
-</li>
-<li><p>配置conf\server.xml文件：</p>
-<p>*找到 <Host> 标签体，在里面配置 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Context docBase&#x3D;&quot;C:\项目存放的路径&quot; path&#x3D;&quot;&#x2F;虚拟目录&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>*优点：不用将项目部署在webapps下了，可以放置在任何位置</p>
-<p>*缺点：需要修改server.xml文件，可能造成破坏</p>
-</li>
-<li><p>在config\Catalina\localhost下创建任意名称的xml文件，在文件中编写</p>
-</li>
-</ol>
-</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">docBase</span>=<span class="string">"C:\项目存放的位置"</span></span></span><br></pre></td></tr></table></figure>
-
-<p>​                <strong>*虚拟目录就是此xml文件的名称</strong></p>
-<p>​                *相比于第二种配置方法，可以避免破坏server.xml文件</p>
-<ol start="2">
-<li><p>静态项目和动态项目：</p>
-<p>目录结构：</p>
-<p>​    –项目的根目录（存放静态项目）</p>
-<p>​            –WEB-INF目录（<strong>此目录下的项目不能被浏览器直接访问</strong>）</p>
-<p>​                    –web.xml: web项目的核心配置文件</p>
-<p>​                            –classes目录：放置字节码文件的目录</p>
-<p>​                                    –lib目录： 放置依赖的jar包</p>
-</li>
-</ol>
-<h2 id="Servlet入门"><a href="#Servlet入门" class="headerlink" title="Servlet入门"></a>Servlet入门</h2><h4 id="1-概念：运行在服务端的小程序"><a href="#1-概念：运行在服务端的小程序" class="headerlink" title="1. 概念：运行在服务端的小程序"></a>1. 概念：运行在服务端的小程序</h4><p>​        Servlet就是一个接口，定义了Java类被浏览器访问到（Tomcat识别）的规则。</p>
-<h4 id="2-Java类对Servlet接口的实现："><a href="#2-Java类对Servlet接口的实现：" class="headerlink" title="2. Java类对Servlet接口的实现："></a>2. Java类对Servlet接口的实现：</h4><ol>
-<li><p>创建一个JavaEE项目</p>
-</li>
-<li><p>定义一个Java类，实现（implement）Servlet接口</p>
-</li>
-<li><p>复习Servlet接口中的抽象方法（Servlet的生命周期方法）</p>
-</li>
-<li><p>配置Servlet</p>
-<p> 在web.xml中进行配置：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>对应类的全类名<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义的名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>访问的资源路径<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h4 id="3-Servlet执行原理："><a href="#3-Servlet执行原理：" class="headerlink" title="3. Servlet执行原理："></a>3. Servlet执行原理：</h4><ol>
-<li>当服务器接收到客户端浏览器的请求后，会解析URL路径，访问获取的Servlet的资源路径</li>
-<li>查找web.xml文件，是否有对应的<url-pattern> 标签体内容。</li>
-<li>如果有，则找到对应的<servlet-class> 全类名</li>
-<li>Tomcat会将字节码文件加载进内存，并且创建对象</li>
-<li>调用其方法</li>
-</ol>
-<h4 id="4-Servlet中的生命周期方法"><a href="#4-Servlet中的生命周期方法" class="headerlink" title="4. Servlet中的生命周期方法"></a>4. Servlet中的生命周期方法</h4><ol>
-<li><p>init方法：</p>
-<ol>
-<li><p>在Servlet被创建时执行，并<strong>只执行一次</strong>。</p>
-</li>
-<li><p>默认情况下，第一次被访问时，Servlet被创建</p>
-</li>
-<li><p>可以配置创建Sevlet的时机：</p>
-<p>在web.xml的<servlet> 标签中配置:</p>
-</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>负数或正数<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>​            *如果是负数，则Servlet在被访问时创建<br>​            *如果时正数，则Servlet在服务器（Tomcat）启动时创建                                    </p>
-<ol start="2">
-<li><p>service方法：</p>
-<p>​    每次访问Servlet时，便会被调用一次</p>
-</li>
-<li><p>destory方法：</p>
-<ol>
-<li><p>Servlet被销毁时执行，并且<strong>只执行一次</strong></p>
-</li>
-<li><p>只有当服务器正常关闭时，才会执行</p>
-</li>
-<li><p><strong>destory方法在Servlet被销毁之前执行，相当于释放资源，而init相当于加载资源</strong></p>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="5-Servlet-3-0"><a href="#5-Servlet-3-0" class="headerlink" title="5. Servlet 3.0:"></a>5. Servlet 3.0:</h4><ol>
-<li><p>好处：支持直接配置。可以不需要web.xml了</p>
-</li>
-<li><p>快速入门：</p>
-<ol>
-<li><p>创建一个JavaEE项目，选择Servlet的版本为3.0以上，可以不创建web.xml</p>
-</li>
-<li><p>定义一个Java类，实现Servlet接口</p>
-</li>
-<li><p>复写方法</p>
-</li>
-<li><p>在类上使用@WebServlet注解，进行配置：<strong>@WebServlet(“资源路径”)</strong></p>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="6-Servlet体系结构"><a href="#6-Servlet体系结构" class="headerlink" title="6. Servlet体系结构"></a>6. Servlet体系结构</h4><p>​    Servlet (接口)—–&gt;GenericServlet(抽象类)——&gt;HttpServlet(抽象类)</p>
-<p>​    *GenericServlet:将Servlet接口中其他的方法都做了默认空实现，只将service()方法作为抽象</p>
-<p>​       所以，将来定义Servlet类时，可以继承GenericServlet，只实现service()方法即可</p>
-<p>​    *HttpServlet:对Http协议的封装，简化操作</p>
-<pre><code>1. 定义类继承HttpServle
-  2. 复写doGet/doPost方法（Servlet的请求方式）</code></pre><h4 id="7-Servlet相关配置"><a href="#7-Servlet相关配置" class="headerlink" title="7.Servlet相关配置"></a>7.Servlet相关配置</h4><pre><code>1. Servlet访问路径：一个Sevlet可以配置多个访问路径   **@WebSevlet({&quot;/xx&quot;,&quot;/xx&quot;,&quot;/xx&quot;})**
- 2. 路径定义规则:
-      1. /xx
-      2. /xx/xx（多层路径
-      3. *.do</code></pre>]]></content>
+<h4 id="发现的问题："><a href="#发现的问题：" class="headerlink" title="发现的问题："></a>发现的问题：</h4><p>在浏览器对服务器进行首次访问时，页面无法显示”欢迎您首次访问“的字样，并且在接下来进行多次访问后，也没有出现”欢迎回来，您上次访问时间：…”的字样,说明在首次访问时并没有成功将lastTime名称的cookie数据传输给浏览器。</p>
+<h4 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h4><p>在对从浏览器获取的cookie数据进行第一次条件判断时采用了if…else if的判断格式。</p>
+<h4 id="解析："><a href="#解析：" class="headerlink" title="解析："></a>解析：</h4><p>if…else if 和 if…if 的区别在于，前者只有对if的条件判断失败后才会执行else if；而后者无论如何都会依次对if条件进行判断。</p>
+<p>回到案例，在第一次访问服务器时，由于浏览器本身就具有其他cookie数据，所以在对获取的cookie数据进行第一次条件判断时（cookies != null &amp;&amp; cookies.length &gt; 0）为true，但是在接下来进行name.equals(“lastTime”) 条件判断时，由于这是首次访问，并没有将lastTime名称的cookie数据传输进浏览器，所以判断为false，跳出if。但是由于采用了 if…else if 的判断格式，在第一次if判断为true的情况无法进行else if判断，导致无法执行else if中的操作（将lastTime名称的cookie数据传入浏览器），所以在进行多次访问后页面仍然显示空白。</p>
+<h4 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h4><p>将对获取的cookie数据进行第一次条件判断时，将判断格式改为 if…if 的格式，这样就可以在首次访问时顺利执行else if中的操作，将设定好的cookie数据传入浏览器。</p>
+]]></content>
       <categories>
-        <category>JavaWeb学习</category>
+        <category>问题</category>
       </categories>
-      <tags>
-        <tag>Servlet</tag>
-        <tag>Tomcat</tag>
-      </tags>
   </entry>
   <entry>
     <title>Response入门学习小结</title>
@@ -538,6 +531,165 @@
         <tag>Http</tag>
         <tag>Response</tag>
         <tag>ServletContext</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tomcat和Servlet入门小结</title>
+    <url>/2020/04/11/Tomcat%E5%92%8CServlet%E5%85%A5%E9%97%A8%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h2 id="Tomcat入门"><a href="#Tomcat入门" class="headerlink" title="Tomcat入门"></a>Tomcat入门</h2><h4 id="1-启动："><a href="#1-启动：" class="headerlink" title="1. 启动："></a>1. 启动：</h4><ol>
+<li><p>进入bin目录，双击startup.bat，运行该文件</p>
+<a id="more"></a>
+</li>
+<li><p>访问浏览器，输入：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 访问自己；</p>
+</li>
+</ol>
+<p>​        输入：http://别人的ip:8080 访问别人（8080为Tomcat的端口号)</p>
+<h4 id="2-启动时可能遇到的问题："><a href="#2-启动时可能遇到的问题：" class="headerlink" title="2. 启动时可能遇到的问题："></a>2. 启动时可能遇到的问题：</h4><ol>
+<li><p>黑窗口一闪而过：</p>
+<p>​    原因：没有正确配置JAVA_HOME变量；</p>
+</li>
+<li><p>启动报错：</p>
+<ol>
+<li>暴力解决：在cmd中输入netstat -ano找到占用端口号的对应进程并杀死</li>
+<li>温柔解决：在Tomcat的config\server.xml下找到</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span> <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span><span class="attr">redirectPort</span>=<span class="string">"8445"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​                将端口号”8080”修改为其他端口号（0~65535）</p>
+<p>​        <em>注：一般将端口号修改为80（浏览器默认端口号）。这样，在使用浏览器访问时，就不用输入端口号了。</em></p>
+<h4 id="3-关闭"><a href="#3-关闭" class="headerlink" title="3. 关闭"></a>3. 关闭</h4><ol>
+<li><p>正常关闭：</p>
+<ol>
+<li><p>bin\shutdow.bat</p>
+</li>
+<li><p>ctrl+c</p>
+</li>
+</ol>
+</li>
+<li><p>强制关闭：</p>
+<p>   点击启动窗口的 x </p>
+</li>
+</ol>
+<h4 id="4-配置："><a href="#4-配置：" class="headerlink" title="4. 配置："></a>4. 配置：</h4><ol>
+<li><p>部署项目的方式：</p>
+<ol>
+<li><p>直接将项目放到webapps目录下即可。</p>
+<p><strong>*项目的访问路径（即保存项目的文件名）就是浏览器访问的虚拟目录</strong></p>
+<p>*简化部署：可以将项目打包成一个war包，再将war包放置在webapps目录下。</p>
+<p>*war包会自动解压缩</p>
+</li>
+<li><p>配置conf\server.xml文件：</p>
+<p>*找到 <Host> 标签体，在里面配置 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Context docBase&#x3D;&quot;C:\项目存放的路径&quot; path&#x3D;&quot;&#x2F;虚拟目录&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>*优点：不用将项目部署在webapps下了，可以放置在任何位置</p>
+<p>*缺点：需要修改server.xml文件，可能造成破坏</p>
+</li>
+<li><p>在config\Catalina\localhost下创建任意名称的xml文件，在文件中编写</p>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">docBase</span>=<span class="string">"C:\项目存放的位置"</span></span></span><br></pre></td></tr></table></figure>
+
+<p>​                <strong>*虚拟目录就是此xml文件的名称</strong></p>
+<p>​                *相比于第二种配置方法，可以避免破坏server.xml文件</p>
+<ol start="2">
+<li><p>静态项目和动态项目：</p>
+<p>目录结构：</p>
+<p>​    –项目的根目录（存放静态项目）</p>
+<p>​            –WEB-INF目录（<strong>此目录下的项目不能被浏览器直接访问</strong>）</p>
+<p>​                    –web.xml: web项目的核心配置文件</p>
+<p>​                            –classes目录：放置字节码文件的目录</p>
+<p>​                                    –lib目录： 放置依赖的jar包</p>
+</li>
+</ol>
+<h2 id="Servlet入门"><a href="#Servlet入门" class="headerlink" title="Servlet入门"></a>Servlet入门</h2><h4 id="1-概念：运行在服务端的小程序"><a href="#1-概念：运行在服务端的小程序" class="headerlink" title="1. 概念：运行在服务端的小程序"></a>1. 概念：运行在服务端的小程序</h4><p>​        Servlet就是一个接口，定义了Java类被浏览器访问到（Tomcat识别）的规则。</p>
+<h4 id="2-Java类对Servlet接口的实现："><a href="#2-Java类对Servlet接口的实现：" class="headerlink" title="2. Java类对Servlet接口的实现："></a>2. Java类对Servlet接口的实现：</h4><ol>
+<li><p>创建一个JavaEE项目</p>
+</li>
+<li><p>定义一个Java类，实现（implement）Servlet接口</p>
+</li>
+<li><p>复习Servlet接口中的抽象方法（Servlet的生命周期方法）</p>
+</li>
+<li><p>配置Servlet</p>
+<p> 在web.xml中进行配置：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>对应类的全类名<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>自定义的名称<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>访问的资源路径<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="3-Servlet执行原理："><a href="#3-Servlet执行原理：" class="headerlink" title="3. Servlet执行原理："></a>3. Servlet执行原理：</h4><ol>
+<li>当服务器接收到客户端浏览器的请求后，会解析URL路径，访问获取的Servlet的资源路径</li>
+<li>查找web.xml文件，是否有对应的<url-pattern> 标签体内容。</li>
+<li>如果有，则找到对应的<servlet-class> 全类名</li>
+<li>Tomcat会将字节码文件加载进内存，并且创建对象</li>
+<li>调用其方法</li>
+</ol>
+<h4 id="4-Servlet中的生命周期方法"><a href="#4-Servlet中的生命周期方法" class="headerlink" title="4. Servlet中的生命周期方法"></a>4. Servlet中的生命周期方法</h4><ol>
+<li><p>init方法：</p>
+<ol>
+<li><p>在Servlet被创建时执行，并<strong>只执行一次</strong>。</p>
+</li>
+<li><p>默认情况下，第一次被访问时，Servlet被创建</p>
+</li>
+<li><p>可以配置创建Sevlet的时机：</p>
+<p>在web.xml的<servlet> 标签中配置:</p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>负数或正数<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​            *如果是负数，则Servlet在被访问时创建<br>​            *如果时正数，则Servlet在服务器（Tomcat）启动时创建                                    </p>
+<ol start="2">
+<li><p>service方法：</p>
+<p>​    每次访问Servlet时，便会被调用一次</p>
+</li>
+<li><p>destory方法：</p>
+<ol>
+<li><p>Servlet被销毁时执行，并且<strong>只执行一次</strong></p>
+</li>
+<li><p>只有当服务器正常关闭时，才会执行</p>
+</li>
+<li><p><strong>destory方法在Servlet被销毁之前执行，相当于释放资源，而init相当于加载资源</strong></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="5-Servlet-3-0"><a href="#5-Servlet-3-0" class="headerlink" title="5. Servlet 3.0:"></a>5. Servlet 3.0:</h4><ol>
+<li><p>好处：支持直接配置。可以不需要web.xml了</p>
+</li>
+<li><p>快速入门：</p>
+<ol>
+<li><p>创建一个JavaEE项目，选择Servlet的版本为3.0以上，可以不创建web.xml</p>
+</li>
+<li><p>定义一个Java类，实现Servlet接口</p>
+</li>
+<li><p>复写方法</p>
+</li>
+<li><p>在类上使用@WebServlet注解，进行配置：<strong>@WebServlet(“资源路径”)</strong></p>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="6-Servlet体系结构"><a href="#6-Servlet体系结构" class="headerlink" title="6. Servlet体系结构"></a>6. Servlet体系结构</h4><p>​    Servlet (接口)—–&gt;GenericServlet(抽象类)——&gt;HttpServlet(抽象类)</p>
+<p>​    *GenericServlet:将Servlet接口中其他的方法都做了默认空实现，只将service()方法作为抽象</p>
+<p>​       所以，将来定义Servlet类时，可以继承GenericServlet，只实现service()方法即可</p>
+<p>​    *HttpServlet:对Http协议的封装，简化操作</p>
+<pre><code>1. 定义类继承HttpServle
+  2. 复写doGet/doPost方法（Servlet的请求方式）</code></pre><h4 id="7-Servlet相关配置"><a href="#7-Servlet相关配置" class="headerlink" title="7.Servlet相关配置"></a>7.Servlet相关配置</h4><pre><code>1. Servlet访问路径：一个Sevlet可以配置多个访问路径   **@WebSevlet({&quot;/xx&quot;,&quot;/xx&quot;,&quot;/xx&quot;})**
+ 2. 路径定义规则:
+      1. /xx
+      2. /xx/xx（多层路径
+      3. *.do</code></pre>]]></content>
+      <categories>
+        <category>JavaWeb学习</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
+        <tag>Tomcat</tag>
       </tags>
   </entry>
 </search>
